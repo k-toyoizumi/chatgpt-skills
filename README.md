@@ -15,7 +15,7 @@ ChatGPT・Codex などの AI Agent で再利用する、個人用の **Rules（�
 - model / reasoning effort の選択方針
 - 差分処理・検証・公開の原則
 
-原則として、特定タスクの細かい手順は Rules に書きません。
+特定タスクの具体的な手順は Rules に置かず、Skills に分離します。
 
 ### Skills
 
@@ -26,7 +26,7 @@ ChatGPT・Codex などの AI Agent で再利用する、個人用の **Rules（�
 - 必要な Rules / source への参照
 - 完了条件・検証方法
 
-Skill は標準的な `SKILL.md` 形式で管理します。
+Skill は `SKILL.md` 形式で管理します。
 
 ```yaml
 ---
@@ -51,7 +51,9 @@ chatgpt-skills/
 └── skills/
     ├── project-session-management/
     │   └── SKILL.md
-    └── incremental-update/
+    ├── incremental-update/
+    │   └── SKILL.md
+    └── research-survey/
         └── SKILL.md
 ```
 
@@ -67,11 +69,11 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 
 ### `rules/model-and-cost.md`
 
-model / reasoning effort の選択、multi-agent の利用条件、Prompt Cache を意識した Context 設計を定義します。
+具体的なモデル名を固定せず、高速 / 標準 / 高性能という能力区分で model / reasoning effort を選択する方針を定義します。通常質問・Web調査と、論文調査各段階の routing もここで定義します。
 
 ### `rules/change-and-validation.md`
 
-差分更新、LLM と通常コードの役割分担、検証、公開、last-known-good の維持方針を定義します。
+差分更新、LLM と通常コードの役割分担、検証、公開、last-known-good に関する**原則のみ**を定義します。具体的な更新手順は `incremental-update` Skill に置きます。
 
 ## Skills 一覧
 
@@ -81,7 +83,17 @@ model / reasoning effort の選択、multi-agent の利用条件、Prompt Cache 
 
 ### `incremental-update`
 
-既存の Web アプリ、レポート、設定、データなどを更新するときに、全件再処理を避け、差分抽出 → 必要部分の処理 → 検証 → 公開までを行う Skill です。
+既存の Web アプリ、レポート、設定、データなどを更新するときに、差分抽出 → 影響範囲選択 → 変更 → 検証 → 公開を行う Skill です。
+
+### `research-survey`
+
+論文・技術調査を以下の3段階で行います。
+
+1. **pre-survey** — 調査観点・仮説・検索軸を設計
+2. **quick-and-wide-survey** — タイトル・abstract 中心に広く候補を収集・一次選別
+3. **deep-research** — 重要文献を深く読み、複数文献を統合・比較・分析
+
+調査の明確さや難易度に応じて、段階の省略・effort の調整を許容します。
 
 ## 運用方針
 
@@ -89,10 +101,12 @@ model / reasoning effort の選択、multi-agent の利用条件、Prompt Cache 
 - **Rule = 安定した規則・判断基準**
 - **State = プロジェクト固有の現在値**
 - **Memory = 長期間安定する個人方針と routing**
+- 決定論的に処理できる作業は、利用可能な通常コード・通常ツールを優先します。
+- 汎用 utility の具体的実装はこの共通リポジトリで固定せず、必要になった各プロジェクト側で実装します。
 - コードや長い仕様、raw log、短命な状態は Memory に持たせません。
 - プロジェクト固有の State は原則として各プロジェクト側で管理します。
 - Rules / Skills は必要なものだけ読み込み、毎回すべてを Context に入れません。
 
 ## Codex との関係
 
-Codex がリポジトリ作業時に自動で参照する入口は `AGENTS.md` です。このリポジトリの `AGENTS.md` は短い routing 情報だけを保持し、詳細な規則は `rules/`、具体的な手順は `skills/` に分離します。
+Codex がリポジトリ作業時に参照する入口は `AGENTS.md` とし、このファイルには短い routing 情報だけを保持します。詳細な規則は `rules/`、具体的な手順は `skills/` に分離します。
