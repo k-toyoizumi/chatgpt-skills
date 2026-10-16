@@ -26,3 +26,8 @@
 ## GUI開発の routing
 
 - アプリ・GUIの新規開発や改善では `skills/develop-gui/SKILL.md` を参照する。小修正では質問・画面2案比較を省略し、重要な曖昧さだけ選択式で確認する。
+
+## 研究開発の routing
+
+- 研究方向・サーベイ設計・アイデア・実験・研究コードの具体化は `skills/research-dialogue/SKILL.md` を参照する。通常3〜5問ずつ検討を重ね、段階移行はユーザーが選ぶ。単純な質問・明確な小修正には適用しない。
+- 文献調査の実行は `research-survey`、研究GUIの画面・動作検証は `develop-gui` と併用し、同じ質問を重複させない。
