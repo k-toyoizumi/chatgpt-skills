@@ -95,6 +95,20 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 
 調査の明確さや難易度に応じて、段階の省略・effort の調整を許容します。
 
+### `develop-gui`
+
+アプリ・GUIの開発・改善を、重要事項の選択式確認 → 大きな変更時の画面2案比較 → 小さな実装 → 実操作・スクリーンショット・既存機能の検証で進めます。小修正では質問や2案比較を省略します。
+
+## 別のPC・Agentで利用する
+
+```bash
+git clone https://github.com/k-toyoizumi/chatgpt-skills.git
+```
+
+必要な `skills/<skill-name>/` を対象AgentのSkill配置先へコピーし、ローカル版を用途に合わせて編集してください。GUI開発の入口は [skills/develop-gui/SKILL.md](skills/develop-gui/SKILL.md) です。対象Agentの指示ファイルから明示的に参照する方法も使えます。
+
+このリポジトリは公開された汎用の正本です。会社固有の変更は社内のローカルコピー・非公開リポジトリで管理し、上流更新は差分を確認して取り込んでください。Cloneしただけでは、別プロジェクトやすべての会話に自動適用されるわけではありません。
+
 ## 運用方針
 
 - **Skill = 実行手順**
