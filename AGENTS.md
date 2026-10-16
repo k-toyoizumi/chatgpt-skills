@@ -23,6 +23,11 @@
 
 ユーザーの最新指示、およびタスク固有の明示的な仕様を最優先する。
 
+## 共通の対話 routing（当面の標準）
+
+- 全分野の作業で `rules/interaction.md` と `skills/iterative-micro-interview/SKILL.md` を基本とする。専門Skillはその上で使い、質問を二重に実施しない。
+- 単純な質問・明確な小修正・即答や一任の依頼では、対話工程を縮小または省略する。
+
 ## GUI開発の routing
 
 - アプリ・GUIの新規開発や改善では `skills/develop-gui/SKILL.md` を参照する。小修正では質問・画面2案比較を省略し、重要な曖昧さだけ選択式で確認する。
