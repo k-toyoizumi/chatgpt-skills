@@ -143,3 +143,10 @@ git clone https://github.com/k-toyoizumi/chatgpt-skills.git
 ## Codex との関係
 
 Codex がリポジトリ作業時に参照する入口は `AGENTS.md` とし、このファイルには短い routing 情報だけを保持します。詳細な規則は `rules/`、具体的な手順は `skills/` に分離します。
+
+## 数学研究から論文化まで
+
+- 判断規則：[rules/mathematical-research.md](rules/mathematical-research.md)
+- 実行手順：[skills/mathematical-research-to-paper/SKILL.md](skills/mathematical-research-to-paper/SKILL.md)
+
+数学研究の仮説・計算・Lean形式証明・先行研究との差分を各プロジェクト側に蓄積し、厳密性・新規性・重要性を別々に評価して論文候補へ昇格させます。具体的な研究ノートや証明ログは共通リポジトリに埋め込みません。
