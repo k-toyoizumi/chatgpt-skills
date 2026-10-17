@@ -36,3 +36,8 @@
 
 - 研究方向・サーベイ設計・アイデア・実験・研究コードの具体化は `skills/research-dialogue/SKILL.md` を参照する。通常3〜5問ずつ検討を重ね、段階移行はユーザーが選ぶ。単純な質問・明確な小修正には適用しない。
 - 文献調査の実行は `research-survey`、研究GUIの画面・動作検証は `develop-gui` と併用し、同じ質問を重複させない。
+
+## 数学研究・形式証明・論文化の routing
+
+- 数学的な新規発見、証明の監査、Leanによる検証、研究ノートの蓄積、論文候補への昇格では `rules/mathematical-research.md` と `skills/mathematical-research-to-paper/SKILL.md` を参照する。
+- 研究方向の対話は既存の `research-dialogue`、文献調査は `research-survey` を併用し、重複した質問をしない。
