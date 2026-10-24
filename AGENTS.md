@@ -28,6 +28,7 @@
 
 - 全分野の作業で `rules/interaction.md` と `skills/iterative-micro-interview/SKILL.md` を基本とする。専門Skillはその上で使い、質問を二重に実施しない。
 - 単純な質問・明確な小修正・即答や一任の依頼では、対話工程を縮小または省略する。
+- プラン立案では `rules/model-and-cost.md` に従い、委譲範囲・具体的なモデル／effort・既存サブエージェントの再利用方針を含める。小作業で委譲しない場合は理由を示す。
 
 ## Git操作の routing
 
