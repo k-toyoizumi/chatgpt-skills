@@ -163,6 +163,8 @@ git clone https://github.com/k-toyoizumi/chatgpt-skills.git
 
 Codex がリポジトリ作業時に参照する入口は `AGENTS.md` とし、このファイルには短い routing 情報だけを保持します。詳細な規則は `rules/`、具体的な手順は `skills/` に分離します。
 
+共通設定の更新時は、[利用プロジェクトとの整合性確認](docs/consumer-consistency.md)も実施します。`scripts/sync_consumers.py --check` で読込案内を検査し、`--apply` で専用区画を同期します。`git config core.hooksPath .githooks` でGit操作後の自動同期を有効化できます。既存hookがある場合は先に統合し、意味上の衝突は更新担当Agentが確認します。
+
 ## 数学研究から論文化まで
 
 - 判断規則：[rules/mathematical-research.md](rules/mathematical-research.md)

@@ -1,0 +1,6 @@
+#!/bin/sh
+root=$(git rev-parse --show-toplevel) || exit 1
+python3 "$root/scripts/sync_consumers.py" --apply || {
+    echo 'chatgpt-skills: 利用先の同期が未完了です。エラーを確認してください。' >&2
+    exit 1
+}

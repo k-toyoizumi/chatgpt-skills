@@ -21,6 +21,7 @@ Gitによる記録・送信の判断は `rules/git-workflow.md`、手順は `ski
 - 検証失敗時は、失敗箇所を限定して修正・再検証する。
 - 正常性を確認できない成果物を、正常版として公開しない。
 - 長期プロジェクトでは、必要に応じて last-known-good の version / commit / URL を Project State に保持する。
+- 共通Rules / Skillsの変更では、利用プロジェクトの読込経路と関連する規約との整合性も検証する。機械的な同期成功を意味上の整合性の検証と同一視しない。具体的手順は正本ルートの `docs/consumer-consistency.md` を参照する。
 
 ## Publish principles
 
