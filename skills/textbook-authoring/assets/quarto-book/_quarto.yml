@@ -13,18 +13,30 @@ book:
   title: "図解で学ぶAIの理論"
   subtitle: "研究者のための数式・概念図・実装"
   search: true
+  page-navigation: true
+  sidebar:
+    style: docked
+    search: true
+    collapse-level: 1
+    pinned: true
   chapters:
     - index.qmd
-    - chapters/01-attention.qmd
+    - part: "Transformer と Attention"
+      chapters:
+        - chapters/01-attention.qmd
+        - chapters/02-attention-mechanics.qmd
+        - chapters/03-attention-practice.qmd
 
 execute:
-  enabled: false   # 教材中のコードは明示的な検証スクリプトで実行する
+  enabled: false  # 実行例は専用スクリプトで数値検証する
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
+    toc-title: "このページ"
+    toc-location: right
     toc-depth: 3
     number-sections: true
     code-copy: true

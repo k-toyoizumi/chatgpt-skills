@@ -50,4 +50,4 @@
 
 ## HTML教科書の routing
 
-- 日本語HTML教材・オンライン教科書の新規制作・改訂では `skills/textbook-authoring/SKILL.md` を参照する。Quartoを正本とし、図表を自動採番・相互参照する。共通対話Skillとの質問重複を避ける。
+- 日本語HTML教材・オンライン教科書の新規制作・改訂では `skills/textbook-authoring/SKILL.md` を参照する。Quarto Bookを正本とし、1章1HTML、左の階層サイドバー（折りたたみ）、右のページ内目次、スマホの章メニュー、前後章ナビゲーションを標準とする。図表は自動採番し、章をまたぐ参照も維持する。共通対話Skillとの質問重複を避ける。

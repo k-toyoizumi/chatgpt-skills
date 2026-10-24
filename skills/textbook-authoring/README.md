@@ -1,4 +1,4 @@
-# Textbook Authoring Skill v0.3
+# Textbook Authoring Skill v0.4
 
 **用途:** Agentによる日本語HTML教科書の構成、静的図解、比較表、数式・実装、検証。
 
@@ -6,23 +6,23 @@ Quarto Bookをソースの正本とし、図・表は**自動番号とクリッ�
 
 ## 含まれるサンプル
 
-`assets/quarto-book/` に研究者向け Self-Attention 1章を収録しています。SVG図5枚、比較表1件、数式とPyTorch検証例、確認問題4問を含みます。
+`assets/quarto-book/` には研究者向けSelf-Attention教材（**導入ページ＋独立した3章**）を収録しています。SVG図5枚、比較表1件、数式とPyTorch検証例、確認問題4問を維持しています。
 
 ## 使い方
 
 1. `SKILL.md` と `references/` を参照し、教材の学習目標・構成を作る。
-2. `assets/quarto-book` を教材リポジトリへ複製し `.qmd` を編集する。図は `{#fig-name}`、表は `{#tbl-name}` を付け、本文から `@fig-name` / `@tbl-name` で参照する。
+2. `assets/quarto-book` を教材リポジトリへ複製し、**章ごとに `.qmd` を分けて** `_quarto.yml` の `book.chapters` に登録する。左サイドバー、折りたたみ、右ページ目次、スマホ用章メニューは `references/navigation.md` に従う。図は `{#fig-name}`、表は `{#tbl-name}` を付け、本文から `@fig-name` / `@tbl-name` で参照する。
 3. Quartoが使える環境では `cd assets/quarto-book && quarto render` を実行する。
 4. このSkill内での検証コマンド：
 
 ```sh
 python scripts/validate.py
 python scripts/test_numeric.py
-python scripts/render_preview.py /tmp/attention-preview.html
-python scripts/test_browser.py /tmp/attention-preview.html
+python scripts/render_preview.py /tmp/attention-book-preview
+python scripts/test_browser.py /tmp/attention-book-preview
 ```
 
-Pandocによる単体HTMLプレビューは **Quarto本体のレンダリングの代替ではありません**。図と表の番号をQuarto Book風に表示しますが、複数章の場合は正式なQuartoビルドで章ごとの番号が確認できるまで公開しないでください。
+Pandocによる複数ページHTMLプレビューは **Quarto本体のレンダリングの代替ではありません**。図と表の番号をQuarto Book風に表示しますが、Quartoのネイティブサイドバーやレスポンシブ動作を再現した保証はありません。正式なQuartoビルドで章移動・各章の図表番号が確認できるまで公開しないでください。
 
 ## ChatGPT と Codex
 
@@ -33,6 +33,6 @@ Pandocによる単体HTMLプレビューは **Quarto本体のレンダリング�
 
 ## 検証状況（初回試作）
 
-- 静的・数値・Chromium表示検証（320 / 390 / 768 / 1440px）: PASS
+- 静的・数値・Pandocの4ページ試作に対するChromium表示検証（320 / 390 / 768 / 1440px）: PASS
 - Quarto CLIビルド: NOT RUN（検証環境に未導入）
 - 内容の専門家査読: 未実施

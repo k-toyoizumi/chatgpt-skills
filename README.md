@@ -132,7 +132,7 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 
 ### `textbook-authoring`
 
-日本語HTML教科書をQuartoで制作・検証するSkill。静的SVG・Mermaid図解、比較表、数式、演習を扱い、図・表には自動採番と本文からの相互参照を付けます。研究者向けSelf-Attention 1章のサンプル付きです。
+日本語HTML教科書をQuartoで制作・検証するSkill。静的SVG・Mermaid図解、比較表、数式、演習を扱い、図・表には自動採番と本文からの相互参照を付けます。研究者向けSelf-Attentionのサンプルを導入ページ＋3章の独立したHTMLに分割し、左の折りたたみ可能な章選択、右のページ内目次、スマホの章メニューと前後章移動に対応します。
 
 - [Skill本体](skills/textbook-authoring/SKILL.md)
 - [導入・検証ガイド](skills/textbook-authoring/README.md)
