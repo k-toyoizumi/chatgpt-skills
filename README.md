@@ -83,7 +83,7 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 
 ### `rules/model-and-cost.md`
 
-具体的なモデル名を固定せず、高速 / 標準 / 高性能という能力区分で model / reasoning effort を選択する方針を定義します。通常質問・Web調査と、論文調査各段階の routing もここで定義します。
+通常はTerra / Luna、本質的な全体計画・批判的レビューのみSolを使う方針と、reasoning effort・委譲・Agent再利用の基準を定義します。具体的なモデル識別子は実行時に確認し、論文調査にも同じ役割分担を適用します。
 
 ### `rules/change-and-validation.md`
 
