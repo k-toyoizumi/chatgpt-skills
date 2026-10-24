@@ -40,6 +40,10 @@
 
 - 作業成果のステージング・コミット・プッシュでは `rules/git-workflow.md` と `skills/git-workflow/SKILL.md` を参照する。合意した作業の確認・add・通常のcommitは事前承認済みとして検証後に自律実行する。pushはユーザーの明示指示時だけ行い、コミットごとの承認依頼はしない。
 
+## 長時間計算の routing
+
+- 長時間の学習・評価・バッチ計算の少数件での動作確認、WSLでのバックグラウンド起動と引き継ぎは `skills/long-running-compute/SKILL.md` を参照する。
+
 ## GUI開発の routing
 
 - アプリ・GUIの新規開発や改善では `skills/develop-gui/SKILL.md` を参照する。小修正では質問・画面2案比較を省略し、重要な曖昧さだけ選択式で確認する。

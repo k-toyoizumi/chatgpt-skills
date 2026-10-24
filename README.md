@@ -95,6 +95,10 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 
 ## Skills 一覧
 
+### `long-running-compute`
+
+長時間の学習・評価・バッチ計算を、少数件での動作確認からWSLでのバックグラウンド起動・起動確認・引き継ぎまで進める[Skill](skills/long-running-compute/SKILL.md)です。他に作業がなければ完了を待たず応答を終了します。
+
 ### `project-session-management`
 
 長期プロジェクトを開始・再開・終了するときに、必要な State だけを読み、Working Set を構築し、checkpoint を残すための Skill です。
