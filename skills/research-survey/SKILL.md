@@ -40,7 +40,7 @@ metadata:
 
 原則:
 
-- `rules/model-and-cost.md` に従い、通常はTerra / Luna + low〜medium。本質的な全体計画・批判的レビューの部分のみSolへ切り出す。
+- `rules/model-and-cost.md` に従い、通常はLuna medium。計画・批判的レビューはSol mediumへ切り出す。
 
 ただし以下では軽量化してよい。
 
@@ -75,7 +75,7 @@ metadata:
 
 原則:
 
-- Terra / Luna + low〜medium
+- Luna medium
 
 大量候補を扱う場合も、収集・一次選別をSolへ一括で割り当てない。
 
@@ -140,7 +140,7 @@ LLM は主に relevance 判定、曖昧な分類、短い要約に使う。
 
 原則:
 
-- 通常の読解・統合・比較・分析はTerra / Luna + low〜medium。前提・論理・評価の批判的レビューの部分のみSolへ切り出し、effortは `rules/model-and-cost.md` と既存の事前承認制限に従う。
+- 通常の読解・統合・比較・分析はLuna medium。前提・論理・評価の批判的レビューはSol mediumへ切り出し、effortは `rules/model-and-cost.md` と既存の事前承認制限に従う。
 
 ただし、単一文献の単純要約だけなら必要に応じて effort を下げてよい。
 

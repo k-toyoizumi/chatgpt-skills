@@ -83,7 +83,7 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 
 ### `rules/model-and-cost.md`
 
-通常はTerra / Luna、本質的な全体計画・批判的レビューのみSolを使う方針と、reasoning effort・委譲・Agent再利用の基準を定義します。具体的なモデル識別子は実行時に確認し、論文調査にも同じ役割分担を適用します。
+用途別にLuna medium/highとSol low/mediumを使う方針と、reasoning effort・委譲・Agent再利用の基準を定義します。具体的なモデル識別子は実行時に確認し、論文調査にも同じ役割分担を適用します。
 
 ### `rules/change-and-validation.md`
 
@@ -175,3 +175,7 @@ Codex がリポジトリ作業時に参照する入口は `AGENTS.md` とし、�
 - 実行手順：[skills/mathematical-research-to-paper/SKILL.md](skills/mathematical-research-to-paper/SKILL.md)
 
 数学研究の仮説・計算・Lean形式証明・先行研究との差分を各プロジェクト側に蓄積し、厳密性・新規性・重要性を別々に評価して論文候補へ昇格させます。具体的な研究ノートや証明ログは共通リポジトリに埋め込みません。
+
+## ローカルCodex設定と使用量表示
+
+モデル・プロファイル・補助ペインの使い方は [導入ガイド](docs/codex-local-setup.md) を参照してください。
