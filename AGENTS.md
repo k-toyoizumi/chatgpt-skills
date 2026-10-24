@@ -38,7 +38,7 @@
 
 ## Git操作の routing
 
-- 作業成果のステージング・コミット・プッシュでは `rules/git-workflow.md` と `skills/git-workflow/SKILL.md` を参照する。合意した作業は検証後の通常プッシュまで自律実行し、個別の制限指示を優先する。
+- 作業成果のステージング・コミット・プッシュでは `rules/git-workflow.md` と `skills/git-workflow/SKILL.md` を参照する。合意した作業の確認・add・通常のcommitは事前承認済みとして検証後に自律実行する。pushはユーザーの明示指示時だけ行い、コミットごとの承認依頼はしない。
 
 ## GUI開発の routing
 
