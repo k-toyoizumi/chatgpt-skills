@@ -58,13 +58,16 @@ chatgpt-skills/
 │   ├── core.md
 │   ├── context-and-state.md
 │   ├── model-and-cost.md
-│   └── change-and-validation.md
+│   ├── change-and-validation.md
+│   └── git-workflow.md
 └── skills/
     ├── project-session-management/
     │   └── SKILL.md
     ├── incremental-update/
     │   └── SKILL.md
-    └── research-survey/
+    ├── research-survey/
+    │   └── SKILL.md
+    └── git-workflow/
         └── SKILL.md
 ```
 
@@ -85,6 +88,10 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 ### `rules/change-and-validation.md`
 
 差分更新、LLM と通常コードの役割分担、検証、公開、last-known-good に関する**原則のみ**を定義します。具体的な更新手順は `incremental-update` Skill に置きます。
+
+### `rules/git-workflow.md`
+
+合意した作業の自律操作範囲、ブランチ選択、既存変更の保全、履歴改変とプッシュの判断基準を定義します。
 
 ## Skills 一覧
 
@@ -117,6 +124,10 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 ### `develop-gui`
 
 アプリ・GUIの開発・改善を、重要事項の選択式確認 → 大きな変更時の画面2案比較 → 小さな実装 → 実操作・スクリーンショット・既存機能の検証で進めます。小修正では質問や2案比較を省略します。
+
+### `git-workflow`
+
+差分確認・変更の選別・検証・ステージング・コミット・プッシュを行います。合意した作業は通常のプッシュまで自律実行し、小さな個人作業は現在のブランチ、共同作業や大きな変更は作業ブランチ＋PRを基本にします。
 
 ## 別のPC・Agentで利用する
 

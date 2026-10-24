@@ -17,6 +17,7 @@
 - Context / State を変更する場合: `rules/context-and-state.md`
 - model / effort / cost を変更する場合: `rules/model-and-cost.md`
 - diff / validation の原則を変更する場合: `rules/change-and-validation.md`
+- Gitの権限・履歴・送信方針を変更する場合: `rules/git-workflow.md`
 - 差分更新 workflow を変更する場合: `skills/incremental-update/SKILL.md`
 - 論文・技術調査 workflow を変更する場合: `skills/research-survey/SKILL.md`
 - その他の Workflow を変更する場合: 対応する `skills/*/SKILL.md`
@@ -27,6 +28,10 @@
 
 - 全分野の作業で `rules/interaction.md` と `skills/iterative-micro-interview/SKILL.md` を基本とする。専門Skillはその上で使い、質問を二重に実施しない。
 - 単純な質問・明確な小修正・即答や一任の依頼では、対話工程を縮小または省略する。
+
+## Git操作の routing
+
+- 作業成果のステージング・コミット・プッシュでは `rules/git-workflow.md` と `skills/git-workflow/SKILL.md` を参照する。合意した作業は検証後の通常プッシュまで自律実行し、個別の制限指示を優先する。
 
 ## GUI開発の routing
 

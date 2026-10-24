@@ -2,6 +2,7 @@
 
 このファイルには、変更・検証に関する安定した原則だけを置く。
 具体的な実行手順は `skills/incremental-update/SKILL.md` に置く。
+Gitによる記録・送信の判断は `rules/git-workflow.md`、手順は `skills/git-workflow/SKILL.md` を参照する。
 
 ## Change principles
 
