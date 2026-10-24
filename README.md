@@ -129,6 +129,14 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 
 差分確認・変更の選別・検証・ステージング・コミット・プッシュを行います。合意した作業は通常のプッシュまで自律実行し、小さな個人作業は現在のブランチ、共同作業や大きな変更は作業ブランチ＋PRを基本にします。
 
+
+### `textbook-authoring`
+
+日本語HTML教科書をQuartoで制作・検証するSkill。静的SVG・Mermaid図解、比較表、数式、演習を扱い、図・表には自動採番と本文からの相互参照を付けます。研究者向けSelf-Attention 1章のサンプル付きです。
+
+- [Skill本体](skills/textbook-authoring/SKILL.md)
+- [導入・検証ガイド](skills/textbook-authoring/README.md)
+
 ## 別のPC・Agentで利用する
 
 ```bash

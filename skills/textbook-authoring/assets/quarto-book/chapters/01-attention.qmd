@@ -1,0 +1,212 @@
+# Self-Attentionを行列演算として理解する {#sec-attention}
+
+*直感からテンソル形状・マスク・Multi-Head・実装検証まで*  
+**対象：** 深層学習の基礎と線形代数を理解している研究者　｜　**想定学習時間：** 40〜60分
+
+::: {.callout-tip}
+## この章の到達目標
+
+- Self-Attention（自己注意機構）の **Query / Key / Value** が何を計算するか、行列表現と各テンソルの形状で説明できる。
+- $1/\sqrt{d_k}$、Softmax、causal mask（因果マスク）の役割を、それぞれ必要な仮定を添えて導出・解釈できる。
+- Multi-Head Attentionの計算と、計算量・位置情報・可視化の限界を区別できる。
+- 小さな数値例を手で追い、PyTorchの実装と照合できる。
+:::
+
+## 1. 何を解決する仕組みか
+
+系列中の各トークン（token：モデルが扱う単位）の表現を、**同じ系列中の別のトークンの情報を使って更新**したい。Recurrent Neural Network（RNN：再帰型ニューラルネットワーク）のようにトークンを逐次伝搬させる代わりに、Self-Attentionは各位置間の関連度を並列に計算する。[Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762)
+
+例えば「**赤い 車 が 走る**」という4つのトークンを考える。「車」の表現には「赤い」「走る」の情報が役立つかもしれない。ただし、**実際にどの位置へ重みが集まるかは学習済みのパラメータと入力次第**であり、この例は直感を与えるだけである。
+
+![Self-Attentionの基本構造。QueryとKeyから重みを求め、Valueの重み付き和で各位置の出力を作る。](../figures/01-qkv-pipeline.svg){#fig-qkv-pipeline}
+
+@fig-qkv-pipeline の重要点は、**重みを決める操作（QとK）と、取り込む情報（V）が別**であること。Qを「問い合わせ」、Kを「照合用の手掛かり」、Vを「集約する内容」と捉えるのは便利だが、これらは人手で割り当てた意味役割ではなく、学習可能な線形射影で得られる。
+
+## 2. 数式とテンソル形状
+
+入力を $X\in\mathbb R^{n\times d_{\mathrm{model}}}$ とする。$n$ は系列長、$d_{\mathrm{model}}$ は入力特徴次元。まず学習可能な射影行列
+
+$$
+W_Q,W_K\in\mathbb R^{d_{\mathrm{model}}\times d_k},\qquad
+W_V\in\mathbb R^{d_{\mathrm{model}}\times d_v}
+$$
+
+によって、Query、Key、Valueを作る（ここでは簡潔にバイアス項を省略する）。
+
+$$
+Q=XW_Q,\qquad K=XW_K,\qquad V=XW_V.
+$$
+
+ここで $Q,K\in\mathbb R^{n\times d_k}$、$V\in\mathbb R^{n\times d_v}$ となる。行列の $i$ 行が対象トークン $i$ を表す。**Scaled Dot-Product Attention（スケーリング付き内積注意）** は
+
+$$
+\boxed{\operatorname{Attention}(Q,K,V)
+=\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}+M\right)V}
+$$
+
+で与えられる。Softmaxは **各行（Queryごと）に、列方向（Key方向）へ** 適用する。$M\in(\mathbb R\cup\{-\infty\})^{n\times n}$ は加算マスクで、参照可能な要素には $0$、禁止する要素には $-\infty$ を入れる（マスクなしなら $M=0$）。結果は $Z\in\mathbb R^{n\times d_v}$ となる。
+
+![Self-Attentionの行列演算におけるテンソル形状。スコアと重みはn×n、最終出力はn×d_v。](../figures/02-shapes.svg){#fig-shapes}
+
+@fig-shapes の $n\times n$ は「参照元の位置 × 参照先の位置」を表す。**Attention重み行列が特徴次元 $d_v$ を持つわけではない**点が重要である。バッチ次元 $b$ を加えると通常 $Q\in\mathbb R^{b\times n\times d_k}$ などになる。
+
+### なぜ $\sqrt{d_k}$ で割るのか
+
+$Q$ と $K$ の各成分が独立で平均0・分散1、さらに成分間の積が互いに無相関という**単純化した仮定**の下では、
+
+$$
+q_i k_j^\top=\sum_{r=1}^{d_k} q_{ir}k_{jr},\qquad
+\operatorname{Var}(q_i k_j^\top)=d_k.
+$$
+
+したがって $\sqrt{d_k}$ で割ることで、この仮定の下でスコアの分散が約1に保たれる。分散が大きいままSoftmaxへ入力すると重みが極端になりやすく、勾配が小さくなる領域に入りやすい。**学習後のQ,Kが独立・単位分散であると主張しているわけではない**。設計意図を説明する近似的な議論である。
+
+## 3. 数値例：3トークンを手計算する
+
+射影後の行列を以下とする。これは**学習済みモデルの観測ではなく説明用の人工的な例**である。
+
+$$
+Q=K=\begin{bmatrix}1&0\\0&1\\1&1\end{bmatrix},\qquad
+V=\begin{bmatrix}2&0\\0&2\\2&2\end{bmatrix},\qquad d_k=2.
+$$
+
+最初のQuery $q_1=(1,0)$ のマスクなしスコアは $(1,0,1)/\sqrt2$。Softmaxを取ると、
+
+$$
+(a_{11},a_{12},a_{13})
+=\operatorname{softmax}(1/\sqrt2,0,1/\sqrt2)
+\approx (0.401,\ 0.198,\ 0.401).
+$$
+
+出力の第1行は
+
+$$
+z_1=0.401(2,0)+0.198(0,2)+0.401(2,2)
+\approx (1.604,\ 1.198).
+$$
+
+つまり「似ている位置から情報をコピーする」だけでなく、**Valueの座標ごとに重み付き和を作る**演算である。
+
+![説明用Q=Kから計算した3×3のAttention重み。各行が1つのQueryで、行の重み総和は1。](../figures/03-weight-matrix.svg){#fig-toy-weights}
+
+@fig-toy-weights は上記の $Q=K$ を用いて計算した全3行のAttention重みを小数3桁に丸めて可視化している。色は大小関係のみを示し、**Attention重みが因果的な説明力を表すものではない**。
+
+## 4. マスク：未来とPaddingをどう扱うか
+
+Autoregressive（自己回帰）生成では、位置 $i$ が未来の位置 $j>i$ を見ないようにする **causal mask** を用いる。禁止位置のスコアへSoftmax前に $-\infty$ を加えれば、指数化後の重みは0になる。Padding maskは埋め草トークンを参照しないようにするもので、目的が異なる。
+
+![4トークンの因果マスク。下三角の位置のみ参照でき、未来の位置は参照できない。](../figures/04-causal-mask.svg){#fig-causal}
+
+@fig-causal では行がQuery、列がKeyで、上三角の白い×印を遮断する。実装では、マスク後に**すべてのKeyが遮断される行**を作るとSoftmaxの値が非有限になる可能性があるため注意する。手作りのマスクに対する数値安定性はテスト対象とする。
+
+### Attentionの種類を比較する
+
+@tbl-attention-types は、**Queryの参照先と情報制約**による違いをまとめたもの。Multi-Headはこれらと排他的な方式ではなく、それぞれと組み合わせられる。
+
+| 構成 | QueryとKey/Valueの入力 | 参照制約 | 典型的な用途・注意点 |
+|:--|:--|:--|:--|
+| 双方向Self-Attention | 同一系列 | 原則、系列内の両方向（Padding等はマスク） | 系列全体の文脈化。未来の情報を使うためそのまま自己回帰デコーダには使わない |
+| Causal Self-Attention | 同一系列 | 現在・過去の位置のみ | 自己回帰生成。未来位置をマスクする |
+| Cross-Attention | QueryとKey/Valueが別系列 | 用途に応じて設定 | デコーダからエンコーダ出力などを参照。系列長が異なれば重みは $n_q\times n_k$ |
+
+: Attentionの代表的な構成と参照制約。Multi-Headは各行の構成に併用できる。 {#tbl-attention-types}
+
+ここでSelf-Attentionの「双方向」とは、**参照が許可される範囲**を意味し、実際の重みが両方向へ等しく割り当てられるという意味ではない。Cross-Attentionでは $Q\in\mathbb R^{n_q\times d_k}$、$K\in\mathbb R^{n_k\times d_k}$ のため、重み行列は $n_q\times n_k$ となる。以降のMulti-Headの説明はSelf-Attentionを例に扱う。
+
+## 5. Multi-Head Attentionと位置情報
+
+**Multi-Head Attention（複数ヘッド注意）** は、ヘッド $h\in\{1,\dots,H\}$ ごとに異なる $W_Q^{(h)},W_K^{(h)},W_V^{(h)}$ を使い、それぞれの結果を結合する。
+
+$$
+\operatorname{head}_h
+=\operatorname{Attention}(XW_Q^{(h)},XW_K^{(h)},XW_V^{(h)}),
+\quad
+Y=\operatorname{Concat}(\operatorname{head}_1,\dots,\operatorname{head}_H)W_O.
+$$
+
+$W_O\in\mathbb R^{(Hd_v)\times d_{\mathrm{model}}}$ は出力射影。一般的な設定では $d_k=d_v=d_{\mathrm{model}}/H$ として全ヘッドを合わせた射影幅を維持するが、これは必須の数学的条件ではない。
+
+![異なる射影から得た複数ヘッドの結果を結合し、出力射影する模式図。](../figures/05-multi-head.svg){#fig-multihead}
+
+@fig-multihead は並列ヘッドの**構造**を表す。ヘッドごとに言語学的な役割が一意に分担されることを保証する図ではない。
+
+また、**位置情報を付加しない、マスクなしのSelf-Attentionは入力トークンの並べ替えに対して置換同変**である。位置の並びだけから順序を推測できないため、通常は位置埋め込みや相対位置バイアスなどを導入する。因果マスクも位置依存の構造なので、この置換同変性の議論とは分けて考える必要がある。
+
+## 6. 計算量と実装上の注意
+
+密なAttentionでは $QK^\top$ の計算が $O(n^2d_k)$、重みと $V$ の積が $O(n^2d_v)$ となる。**計算量は系列長 $n$ の2乗に比例**する（射影のコストは別途）。Attention行列を明示的に保持する素朴な実装の中間メモリは $O(n^2)$。FlashAttentionのようなアルゴリズムはAttention行列を実体化しないことでメモリ/IOを改善できるが、密な全ペアの計算そのものが一般に線形時間になるわけではない。[Dao et al. (2022)](https://arxiv.org/abs/2205.14135)
+
+次の最小実装は、上の人工例の **1ヘッド・マスクなし・射影済み** $Q,K,V$ を直接計算する。訓練可能なTransformer層そのものではない。
+
+```{python}
+import math
+import torch
+
+Q = torch.tensor([[1., 0.], [0., 1.], [1., 1.]])
+K = Q.clone()
+V = torch.tensor([[2., 0.], [0., 2.], [2., 2.]])
+score = Q @ K.T / math.sqrt(Q.shape[-1])
+A = torch.softmax(score, dim=-1)  # Key方向で正規化
+Z = A @ V
+print('A =', A.round(decimals=3))
+print('Z[0] =', Z[0].round(decimals=3))
+assert A.shape == (3, 3)
+assert Z.shape == (3, 2)
+assert torch.allclose(A.sum(dim=-1), torch.ones(3))
+```
+
+**検証するべき点：** Softmaxの軸、$Q$と$K$の転置、マスクの真偽値の意味、dtype、非有限値の発生。PyTorchの高水準APIではマスクの意味論がAPIごとに異なり得るため、移植時は必ずドキュメントと単体テストで確認する。
+
+## 7. Attentionは「説明」なのか
+
+Attentionの重みは「**この層、この入力に対して、どのValueをどれだけ混ぜるか**」を示すが、**その重みだけでモデル予測への因果的寄与や人間に理解しやすい理由が得られるとは限らない**。Jain & Wallace (2019)は注意重みを説明とみなすことの問題点を示し、Wiegreffe & Pinter (2019)は評価方法や「説明」の定義に依存する点を議論した。二者択一の結論ではなく、**どんな問いに対する説明なのかを先に決める**ことが重要である。
+
+## 8. 理解度チェック
+
+**Q1.** $Q,K\in\mathbb R^{n\times d_k}$、$V\in\mathbb R^{n\times d_v}$ のとき、Attention重み $A$ と出力 $Z$ の形状は？
+
+<details><summary>解答と誤答しやすい点</summary>
+
+$A\in\mathbb R^{n\times n}$、$Z\in\mathbb R^{n\times d_v}$。$A$ に $d_v$ が現れると考えるのは、**参照位置への重み**と**集約した特徴次元**を混同した誤り。
+
+</details>
+
+**Q2.** スケーリング係数 $1/\sqrt{d_k}$ は、学習済みの全層・全入力についてスコアの分散が必ず1になることを保証するか？
+
+<details><summary>解答と誤答しやすい点</summary>
+
+保証しない。独立性・平均0・単位分散等を仮定したときにスコア分散が $d_k$ に比例するという**近似的な動機付け**である。学習したベクトルの統計量は一般にこの仮定と一致しない。
+
+</details>
+
+**Q3.** なぜ自己回帰生成では未来トークンへのマスクが必要なのか？ マスクをどの計算段階で適用するか？
+
+<details><summary>解答と誤答しやすい点</summary>
+
+未来の情報を参照して次トークン予測を行うリークを防ぐため。**Softmaxの前のスコア**に加算する。Softmax後の重みを単純に0にするだけでは、残った重みの総和が1でなくなり、処理が異なる。
+
+</details>
+
+**Q4.** Attention重みが0.8のトークンは、モデル予測の80%を因果的に説明すると言えるか？
+
+<details><summary>解答と誤答しやすい点</summary>
+
+言えない。0.8はそのQueryの**Value集約における係数**であり、予測への寄与率ではない。Valueの大きさ・方向、残差接続、後段の非線形変換などにも結果が依存する。
+
+</details>
+
+## 9. まとめ・発展
+
+- $A=\operatorname{softmax}(QK^\top/\sqrt{d_k}+M)$ は位置間の **重み**、$Z=AV$ は情報の **集約**。
+- 係数 $1/\sqrt{d_k}$ はスコアのスケールを緩和する設計。理想化した分散計算と実データの性質を混同しない。
+- causal maskは予測時の情報制約、Multi-Headは異なる射影による並列集約、位置情報は順序を扱うための仕組み。
+- 可視化したAttentionは**中間計算の記述**であって、そのまま予測理由にはならない。
+
+### 主要参考文献
+
+1. Vaswani et al. (2017). [Attention Is All You Need](https://arxiv.org/abs/1706.03762) — TransformerおよびScaled Dot-Product Attentionの原論文。
+2. Dao et al. (2022). [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135) — メモリ/IO効率の改善。
+3. Jain & Wallace (2019). [Attention is not Explanation](https://aclanthology.org/N19-1357/) — Attention重みの解釈可能性に対する批判。
+4. Wiegreffe & Pinter (2019). [Attention is not not Explanation](https://aclanthology.org/D19-1002/) — 「説明」の定義と評価方法の議論。
+
+**図の出典：** この章の図はすべて教材用に新規作成したSVG模式図。数値例の重みは提示した$Q,K$から実際に計算している。図は論文の図の転載ではない。

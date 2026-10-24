@@ -1,0 +1,33 @@
+project:
+  type: book
+  output-dir: _book
+
+lang: ja
+
+crossref:
+  fig-title: "図"
+  tbl-title: "表"
+  title-delim: ":"
+
+book:
+  title: "図解で学ぶAIの理論"
+  subtitle: "研究者のための数式・概念図・実装"
+  search: true
+  chapters:
+    - index.qmd
+    - chapters/01-attention.qmd
+
+execute:
+  enabled: false   # 教材中のコードは明示的な検証スクリプトで実行する
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-copy: true
+    smooth-scroll: false
+    mermaid:
+      theme: neutral

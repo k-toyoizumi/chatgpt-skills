@@ -46,3 +46,7 @@
 
 - 数学的な新規発見、証明の監査、Leanによる検証、研究ノートの蓄積、論文候補への昇格では `rules/mathematical-research.md` と `skills/mathematical-research-to-paper/SKILL.md` を参照する。
 - 研究方向の対話は既存の `research-dialogue`、文献調査は `research-survey` を併用し、重複した質問をしない。
+
+## HTML教科書の routing
+
+- 日本語HTML教材・オンライン教科書の新規制作・改訂では `skills/textbook-authoring/SKILL.md` を参照する。Quartoを正本とし、図表を自動採番・相互参照する。共通対話Skillとの質問重複を避ける。

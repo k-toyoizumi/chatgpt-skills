@@ -1,0 +1,29 @@
+/* Shared styles for the Quarto build. Static, text-forward, no decorative motion. */
+:root { --tb-ink: #23354a; --tb-strong: #152b45; --tb-muted:#617386; --tb-line:#dce5ee; --tb-blue:#1e63a5; --tb-blue-pale:#ebf2fa; --tb-surface:#fff; }
+body { color:var(--tb-ink); font-family: -apple-system, BlinkMacSystemFont,"Noto Sans JP", "Noto Sans CJK JP", sans-serif; line-height:1.88; letter-spacing:.008em; }
+#quarto-document-content,main.content { max-width:900px; }
+h1,h2,h3 { color:var(--tb-strong); line-height:1.45; font-weight:750; letter-spacing:-.018em; }
+h1 { font-size: clamp(1.9rem,3.2vw,2.65rem); }
+h2 { margin-top:2.6rem; padding-top:.3rem; border-bottom:1px solid var(--tb-line); padding-bottom:.62rem; }
+h3 { margin-top:2rem; }
+p, li { line-height:1.85; }
+p { margin-bottom:1.1rem; }
+strong { color:var(--tb-strong); }
+a { color:var(--tb-blue); text-underline-offset:3px; }
+figure, .quarto-figure { margin:2rem auto; }
+figure img,.quarto-figure img,.cell-output-display svg { border-radius:14px; display:block; width:100%; max-width:100%; height:auto; background:#f7fafc; }
+figcaption,.figure-caption { font-size:.87rem; color:var(--tb-muted); line-height:1.68; margin-top:.7rem; }
+.callout-tip { border-radius:13px; }
+.math.display,math[display="block"] { max-width:100%; overflow-x:auto; overflow-y:hidden; padding:.55rem 0; }
+pre { white-space:pre; overflow-x:auto; border-radius:12px; font-size:.91rem; }
+code { font-family:"SFMono-Regular",Consolas,"Noto Sans Mono CJK JP",monospace; }
+details { border:1px solid #d4e1ec; background:#f8fbff; border-radius:12px; padding:.9rem 1.1rem; margin:.8rem 0 1rem; }
+details summary { color:var(--tb-blue); font-weight:700; cursor:pointer; }
+details[open] summary { margin-bottom:.6rem; }
+@media(max-width:640px) { body { font-size:1rem; } h1 { font-size:1.9rem; } h2 { font-size:1.4rem; } figure,.quarto-figure { margin:1.4rem 0; } }
+
+/* Tables: preserve column legibility on mobile; Quarto captions are numbered. */
+.table-responsive, .quarto-table-container {max-width:100%; overflow-x:auto;}
+table {width:100%; min-width:540px; border-collapse:collapse; font-size:.94rem; line-height:1.65;}
+tr th {background:#eff5fb; color:var(--tb-strong);} th,td {padding:.75rem .8rem; border-bottom:1px solid var(--tb-line); vertical-align:top;}
+.table-caption, caption {color:var(--tb-muted); font-size:.88rem; line-height:1.6;}
