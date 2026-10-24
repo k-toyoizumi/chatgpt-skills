@@ -10,11 +10,11 @@
 - 重みの可視化と因果的な説明を区別できる。
 :::
 
-前章の @fig-toy-weights の重み計算と @tbl-attention-types の比較を踏まえ、実装・評価上の論点を確認する。
+本章の記号を確認する。クエリ行列（Query matrix：$Q$）、キー行列（Key matrix：$K$）、バリュー行列（Value matrix：$V$）から、注意重み行列（Attention weight matrix：$A$）と出力行列（$Z$）を計算する。系列長（$n$）、キーの特徴次元（$d_k$）、バリューの特徴次元（$d_v$）を用いる。前章の @fig-toy-weights の重み計算と @tbl-attention-types の比較を踏まえ、実装・評価上の論点を確認する。
 
 ## 計算量と実装上の注意
 
-密なAttentionでは $QK^\top$ の計算が $O(n^2d_k)$、重みと $V$ の積が $O(n^2d_v)$ となる。**計算量は系列長 $n$ の2乗に比例**する（射影のコストは別途）。Attention行列を明示的に保持する素朴な実装の中間メモリは $O(n^2)$。FlashAttentionのようなアルゴリズムはAttention行列を実体化しないことでメモリ/IOを改善できるが、密な全ペアの計算そのものが一般に線形時間になるわけではない。[Dao et al. (2022)](https://arxiv.org/abs/2205.14135)
+密な注意機構（dense Attention）では、計算量の漸近的な増え方を表すオーダー記法（Big O notation：$O(\cdot)$）を用いると、$QK^\top$ の計算が $O(n^2d_k)$、重みと $V$ の積が $O(n^2d_v)$ となる。**計算量は系列長 $n$ の2乗に比例**する（射影のコストは別途）。Attention行列を明示的に保持する素朴な実装の中間メモリは $O(n^2)$。FlashAttentionのようなアルゴリズムはAttention行列を実体化しないことでメモリおよび入出力（Input/Output：I/O）を改善できるが、密な全ペアの計算そのものが一般に線形時間になるわけではない。[Dao et al. (2022)](https://arxiv.org/abs/2205.14135)
 
 次の最小実装は、上の人工例の **1ヘッド・マスクなし・射影済み** $Q,K,V$ を直接計算する。訓練可能なTransformer層そのものではない。
 
@@ -35,7 +35,7 @@ assert Z.shape == (3, 2)
 assert torch.allclose(A.sum(dim=-1), torch.ones(3))
 ```
 
-**検証するべき点：** Softmaxの軸、$Q$と$K$の転置、マスクの真偽値の意味、dtype、非有限値の発生。PyTorchの高水準APIではマスクの意味論がAPIごとに異なり得るため、移植時は必ずドキュメントと単体テストで確認する。
+**検証するべき点：** Softmaxの軸、$Q$と$K$の転置、マスクの真偽値の意味、データ型（dtype）、非有限値の発生。PyTorchの高水準アプリケーション・プログラミング・インターフェース（Application Programming Interface：API）ではマスクの意味論がAPIごとに異なり得るため、移植時は必ずドキュメントと単体テストで確認する。
 
 ## Attentionは「説明」なのか
 

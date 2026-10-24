@@ -6,11 +6,11 @@
 ## この章の到達目標
 
 - 小さなAttentionの数値例を手計算できる。
-- 因果マスク・Paddingマスク、双方向・Cross-Attentionの違いを説明できる。
-- Multi-Head Attentionの射影と出力の形状を説明できる。
+- 因果マスク（causal mask）・パディングマスク（padding mask）、双方向の自己注意機構（bidirectional Self-Attention）・交差注意機構（Cross-Attention）の違いを説明できる。
+- 複数ヘッド注意機構（Multi-Head Attention）の射影と出力の形状を説明できる。
 :::
 
-前章の @fig-shapes で整理した行列の形状を踏まえて、Attention重みの計算と拡張を考える。
+本章で用いるクエリ行列（Query matrix：$Q$）、キー行列（Key matrix：$K$）、バリュー行列（Value matrix：$V$）は、自己注意機構（Self-Attention）の入力から学習可能な射影で作られる。キーの特徴次元（$d_k$）もここで導入しておく。前章の @fig-shapes で整理した行列の形状を踏まえて、Attention重みの計算と拡張を考える。
 
 ## 数値例：3トークンを手計算する
 
@@ -21,7 +21,7 @@ Q=K=\begin{bmatrix}1&0\\0&1\\1&1\end{bmatrix},\qquad
 V=\begin{bmatrix}2&0\\0&2\\2&2\end{bmatrix},\qquad d_k=2.
 $$
 
-最初のQuery $q_1=(1,0)$ のマスクなしスコアは $(1,0,1)/\sqrt2$。Softmaxを取ると、
+最初のクエリベクトル（Query vector：$q_1=(1,0)$） のマスクなしスコアは $(1,0,1)/\sqrt2$。Softmaxを取ると、
 
 $$
 (a_{11},a_{12},a_{13})
@@ -29,7 +29,7 @@ $$
 \approx (0.401,\ 0.198,\ 0.401).
 $$
 
-出力の第1行は
+出力ベクトル（$z_1$）は
 
 $$
 z_1=0.401(2,0)+0.198(0,2)+0.401(2,2)
@@ -44,7 +44,7 @@ $$
 
 ## マスク：未来とPaddingをどう扱うか
 
-Autoregressive（自己回帰）生成では、位置 $i$ が未来の位置 $j>i$ を見ないようにする **causal mask** を用いる。禁止位置のスコアへSoftmax前に $-\infty$ を加えれば、指数化後の重みは0になる。Padding maskは埋め草トークンを参照しないようにするもので、目的が異なる。
+自己回帰（Autoregressive）生成では、位置 $i$ が未来の位置 $j>i$ を見ないようにする **因果マスク（causal mask）** を用いる。禁止位置のスコアへSoftmax前に $-\infty$ を加えれば、指数化後の重みは0になる。パディングマスク（padding mask）は埋め草トークンを参照しないようにするもので、目的が異なる。
 
 ![4トークンの因果マスク。下三角の位置のみ参照でき、未来の位置は参照できない。](../figures/04-causal-mask.svg){#fig-causal}
 
@@ -66,7 +66,7 @@ Autoregressive（自己回帰）生成では、位置 $i$ が未来の位置 $j>
 
 ## Multi-Head Attentionと位置情報
 
-**Multi-Head Attention（複数ヘッド注意）** は、ヘッド $h\in\{1,\dots,H\}$ ごとに異なる $W_Q^{(h)},W_K^{(h)},W_V^{(h)}$ を使い、それぞれの結果を結合する。
+**複数ヘッド注意機構（Multi-Head Attention）** は、ヘッド番号（$h$）が $h\in\{1,\dots,H\}$ を動くものとし、ヘッド数（$H$）ごとに異なる $W_Q^{(h)},W_K^{(h)},W_V^{(h)}$ を使い、それぞれの結果を結合する。
 
 $$
 \operatorname{head}_h
@@ -75,7 +75,7 @@ $$
 Y=\operatorname{Concat}(\operatorname{head}_1,\dots,\operatorname{head}_H)W_O.
 $$
 
-$W_O\in\mathbb R^{(Hd_v)\times d_{\mathrm{model}}}$ は出力射影。一般的な設定では $d_k=d_v=d_{\mathrm{model}}/H$ として全ヘッドを合わせた射影幅を維持するが、これは必須の数学的条件ではない。
+ここで $\operatorname{Concat}$ はヘッド出力の連結、$Y$ は連結後の出力、$W_O\in\mathbb R^{(Hd_v)\times d_{\mathrm{model}}}$ は出力射影行列である。一般的な設定では $d_k=d_v=d_{\mathrm{model}}/H$ として全ヘッドを合わせた射影幅を維持するが、これは必須の数学的条件ではない。
 
 ![異なる射影から得た複数ヘッドの結果を結合し、出力射影する模式図。](../figures/05-multi-head.svg){#fig-multihead}
 
