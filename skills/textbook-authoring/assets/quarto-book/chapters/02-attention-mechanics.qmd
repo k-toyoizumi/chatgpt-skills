@@ -66,7 +66,7 @@ $$
 
 ## Multi-Head Attentionと位置情報
 
-**複数ヘッド注意機構（Multi-Head Attention）** は、ヘッド番号（$h$）が $h\in\{1,\dots,H\}$ を動くものとし、ヘッド数（$H$）ごとに異なる $W_Q^{(h)},W_K^{(h)},W_V^{(h)}$ を使い、それぞれの結果を結合する。
+**複数ヘッド注意機構（Multi-Head Attention）** では、ヘッド数（$H$）とヘッド番号（$h\in\{1,\dots,H\}$）を定義し、各ヘッドに異なる $W_Q^{(h)},W_K^{(h)},W_V^{(h)}$ を使い、それぞれの結果を結合する。
 
 $$
 \operatorname{head}_h
