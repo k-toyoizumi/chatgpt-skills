@@ -54,6 +54,8 @@ $$
 
 @tbl-attention-types は、**Queryの参照先と情報制約**による違いをまとめたもの。Multi-Headはこれらと排他的な方式ではなく、それぞれと組み合わせられる。
 
+::: {.tb-table-comparison}
+
 | 構成 | QueryとKey/Valueの入力 | 参照制約 | 典型的な用途・注意点 |
 |:--|:--|:--|:--|
 | 双方向Self-Attention | 同一系列 | 原則、系列内の両方向（Padding等はマスク） | 系列全体の文脈化。未来の情報を使うためそのまま自己回帰デコーダには使わない |
@@ -61,6 +63,8 @@ $$
 | Cross-Attention | QueryとKey/Valueが別系列 | 用途に応じて設定 | デコーダからエンコーダ出力などを参照。系列長が異なれば重みは $n_q\times n_k$ |
 
 : Attentionの代表的な構成と参照制約。Multi-Headは各行の構成に併用できる。 {#tbl-attention-types}
+
+:::
 
 ここでSelf-Attentionの「双方向」とは、**参照が許可される範囲**を意味し、実際の重みが両方向へ等しく割り当てられるという意味ではない。Cross-Attentionでは $Q\in\mathbb R^{n_q\times d_k}$、$K\in\mathbb R^{n_k\times d_k}$ のため、重み行列は $n_q\times n_k$ となる。以降のMulti-Headの説明はSelf-Attentionを例に扱う。
 

@@ -22,8 +22,17 @@ details summary { color:var(--tb-blue); font-weight:700; cursor:pointer; }
 details[open] summary { margin-bottom:.6rem; }
 @media(max-width:640px) { body { font-size:1rem; } h1 { font-size:1.9rem; } h2 { font-size:1.4rem; } figure,.quarto-figure { margin:1.4rem 0; } }
 
-/* Tables: preserve column legibility on mobile; Quarto captions are numbered. */
-.table-responsive, .quarto-table-container {max-width:100%; overflow-x:auto;}
-table {width:100%; min-width:540px; border-collapse:collapse; font-size:.94rem; line-height:1.65;}
-tr th {background:#eff5fb; color:var(--tb-strong);} th,td {padding:.75rem .8rem; border-bottom:1px solid var(--tb-line); vertical-align:top;}
+/* Tables: allow natural sizing by default; opt in to compact/comparison/wide types. */
+.table-responsive, .quarto-table-container, .tb-table-compact, .tb-table-comparison, .tb-table-wide {max-width:100%; overflow-x:auto;}
+.quarto-table-container table, .table-responsive table, main table {width:auto; min-width:0; table-layout:auto; white-space:normal; border-collapse:collapse; font-size:.94rem; line-height:1.65;}
+main tr th {background:#eff5fb; color:var(--tb-strong);}
+main th,main td {padding:.75rem .8rem; border-bottom:1px solid var(--tb-line); vertical-align:top;}
+.tb-table-compact table {width:max-content; min-width:0; max-width:none; table-layout:auto;}
+.tb-table-compact :is(th,td) {white-space:nowrap;}
+.tb-table-compact :is(th,td):first-child {text-align:left;}
+.tb-table-compact :is(th,td):not(:first-child) {text-align:right; font-variant-numeric:tabular-nums;}
+.tb-table-comparison table {width:100%; min-width:0; table-layout:auto;}
+.tb-table-comparison :is(th,td) {white-space:normal; overflow-wrap:anywhere;}
+/* Only apply a larger floor when the specific table really needs horizontal scroll. */
+.tb-table-wide table {min-width:680px;}
 .table-caption, caption {color:var(--tb-muted); font-size:.88rem; line-height:1.6;}
