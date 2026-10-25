@@ -179,3 +179,7 @@ Codex がリポジトリ作業時に参照する入口は `AGENTS.md` とし、�
 ## ローカルCodex設定と使用量表示
 
 モデル・プロファイル・補助ペインの使い方は [導入ガイド](docs/codex-local-setup.md) を参照してください。
+
+## WSLの権限・通信トラブル
+
+DNSエラー・localhostのsocket権限エラー・書込拒否は、[診断手順](docs/wsl-execution-troubleshooting.md)で通常実行と許可された昇格実行を比較します。承認設定とsandbox境界を区別し、必要な能力だけを確認して復旧します。
