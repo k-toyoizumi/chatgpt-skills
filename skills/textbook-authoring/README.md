@@ -2,7 +2,7 @@
 
 **用途:** Agentによる日本語HTML教科書の構成、静的図解、比較表、数式・実装、検証。
 
-Quarto Bookをソースの正本とし、図・表は**自動番号とクリック可能な相互参照**を付けます。図の装飾アニメーションは原則使いません。略称は各章の初出で**正式名称（略称）**を示し、数式記号は最初に意味・次元・単位を説明します。見出し・図表・演習にも適用します。
+Quarto Bookをソースの正本とし、図・表は**自動番号とクリック可能な相互参照**を付けます。表は小型数値行列（内容幅）・長文比較表（折り返し）・幅広い表（個別に横スクロール）で作り分け、行・列の主体を明記します。図の装飾アニメーションは原則使いません。略称は各章の初出で**正式名称（略称）**を示し、数式記号は最初に意味・次元・単位を説明します。見出し・図表・演習にも適用します。
 
 ## 含まれるサンプル
 
@@ -18,6 +18,7 @@ Quarto Bookをソースの正本とし、図・表は**自動番号とクリッ�
 ```sh
 python scripts/validate.py
 python scripts/test_numeric.py
+python scripts/test_tables_layout.py  # Chromium/Playwrightがある場合、CSSレイアウトを回帰検証
 python scripts/render_preview.py /tmp/attention-book-preview
 python scripts/test_browser.py /tmp/attention-book-preview
 ```
