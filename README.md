@@ -11,6 +11,7 @@ ChatGPT・Codex などの AI Agent で再利用する、個人用の **Rules（�
 - 判断方針とカスタム指示への追記文：[rules/interaction.md](rules/interaction.md)
 - 共通手順：[iterative-micro-interview](skills/iterative-micro-interview/SKILL.md)
 - 研究固有の判断：[research-dialogue](skills/research-dialogue/SKILL.md)
+- 研究の探索と検証の優先順位：[rules/research.md](rules/research.md)
 - GUI固有の設計・検証：[develop-gui](skills/develop-gui/SKILL.md)
 
 本名称と具体的な組み合わせは提案方式です。要求の引き出し・半構造化インタビュー、反復的設計、混合主導型の人間–AI協働を背景とし、運用しながら効果を確かめます。
@@ -88,6 +89,10 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 ### `rules/change-and-validation.md`
 
 差分更新、LLM と通常コードの役割分担、検証、公開、last-known-good に関する**原則のみ**を定義します。具体的な更新手順は `incremental-update` Skill に置きます。
+
+### `rules/research.md`
+
+研究の探索では問い・問題設定・新しい着想を優先し、方向選択後に厳密な検証と再現可能な蓄積へ進む方針を定義します。探索中の検証は、方向選択を変え得る範囲に絞ります。
 
 ### `rules/git-workflow.md`
 

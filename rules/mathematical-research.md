@@ -2,6 +2,8 @@
 
 Applies to mathematical discovery, conjectures, computational searches, proof audits, and eventual publication.
 
+For exploration versus rigorous verification, follow `rules/research.md`. During discovery, prioritize questions, definitions, examples and conjectures; choose formalization work when it helps select a direction or verify an agreed claim. Preserve the claim and evidence standards below in every phase.
+
 - Separate **precise mathematical correctness**, **formal verification**, **novelty**, and **publication significance**. Never infer one from another.
 - State the exact quantified proposition, domain, assumptions, definitions, and whether it is conjectural.
 - Keep reproducible experiments, bounded search results, failed approaches, and literature citations. Finite checks do not prove universal statements.

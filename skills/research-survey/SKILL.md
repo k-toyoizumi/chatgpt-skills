@@ -18,6 +18,7 @@ metadata:
 ## Applicable rules
 
 - `rules/core.md`
+- `rules/research.md`（研究の段階と探索・検証の優先順位）
 - `rules/model-and-cost.md`
 - 長期研究の場合は `rules/context-and-state.md`
 
