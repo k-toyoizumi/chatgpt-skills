@@ -4,17 +4,14 @@ ChatGPT・Codex などの AI Agent で再利用する、個人用の **Rules（�
 
 > リポジトリ名は現在 `chatgpt-skills` ですが、Skills だけでなく Rules も管理します。名称変更は必要になった時点で行います。
 
-## 基本方式：Iterative Micro-Interview–Driven Workflow
+## 計画・実行・レビュー
 
-当面、研究・開発・GUI・調査・制作・計画・業務改善全般に **反復マイクロインタビュー駆動** を試行します。短い選択式質問（通常3〜5問）→回答の検討→追加質問→合意した小調査・試作→結果を踏まえた質問→本格実行の順に進めます。人間は重要判断、agentは検討・実行・自己検証を担います。単純な質問や明確な小修正は直接対応します。
+計画は `work-planning`、合意済み計画の実行は `work-execution`、明示依頼された独立レビューは `background-critical-review` を使う。計画時に重要な選択が残る場合は `iterative-micro-interview` を併用する。
 
-- 判断方針とカスタム指示への追記文：[rules/interaction.md](rules/interaction.md)
-- 共通手順：[iterative-micro-interview](skills/iterative-micro-interview/SKILL.md)
-- 研究固有の判断：[research-dialogue](skills/research-dialogue/SKILL.md)
-- 研究の探索と検証の優先順位：[rules/research.md](rules/research.md)
-- GUI固有の設計・検証：[develop-gui](skills/develop-gui/SKILL.md)
-
-本名称と具体的な組み合わせは提案方式です。要求の引き出し・半構造化インタビュー、反復的設計、混合主導型の人間–AI協働を背景とし、運用しながら効果を確かめます。
+- [work-planning](skills/work-planning/SKILL.md)
+- [work-execution](skills/work-execution/SKILL.md)
+- [background-critical-review](skills/background-critical-review/SKILL.md)
+- [iterative-micro-interview](skills/iterative-micro-interview/SKILL.md)
 
 ## Rules と Skills の役割
 
@@ -124,11 +121,11 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 
 ### `iterative-micro-interview`
 
-全分野の作業の共通対話手順。短い選択式質問と回答の検討・追加質問・小さな検証を反復し、重要判断を共有して本格実行へ進みます。
+計画時に重要な選択を具体化する対話手順。短い選択式質問と回答の検討・追加質問・小さな検証を反復し、重要判断を共有して本格実行へ進みます。
 
 ### `research-dialogue`
 
-共通インタビュー方式に、研究の目的・仮説・サーベイ範囲・実験評価の判断軸を加えます。文献調査・GUIの専門Skillと併用します。
+研究の目的・仮説・サーベイ範囲・実験評価の判断軸を扱います。文献調査・GUIの専門Skillと併用します。
 
 ### `develop-gui`
 

@@ -8,7 +8,7 @@
 
 ## 基本の進め方（試行）
 
-全分野の仕事・制作・調査・計画では、反復マイクロインタビュー駆動を基本とする。適用判断は `rules/interaction.md`、具体的な手順は `skills/iterative-micro-interview/SKILL.md` を参照する。既知事項や単純な質問に不要なインタビューを挟まない。
+計画・実行・対話の適用判断は `rules/interaction.md` を参照する。
 
 研究では `rules/research.md` を読み、探索中は問い・問題設定・発散的な着想を優先し、方向選択後に厳密な検証・蓄積へ移る。
 

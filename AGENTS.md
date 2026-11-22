@@ -30,11 +30,9 @@
 - `python3 scripts/sync_consumers.py --check` で対象と差分を確認し、必要なら `--apply` で管理区画を同期する。変更した規約に関係する利用先の指示・仕様も読み、意味上の衝突や読込漏れを必要な範囲で修正する。
 - 各案件の既存変更・承認条件を保持する。権限不足・参照不能・重要判断待ちは未解決として報告し、全件整合済みとしない。
 
-## 共通の対話 routing（当面の標準）
+## 計画・実行・レビュー
 
-- 全分野の作業で `rules/interaction.md` と `skills/iterative-micro-interview/SKILL.md` を基本とする。専門Skillはその上で使い、質問を二重に実施しない。
-- 単純な質問・明確な小修正・即答や一任の依頼では、対話工程を縮小または省略する。
-- プラン立案では `rules/model-and-cost.md` に従い、委譲範囲・具体的なモデル／effort・既存サブエージェントの再利用方針を含める。小作業で委譲しない場合は理由を示す。
+計画は `work-planning`、合意済み計画の実行は `work-execution`、明示依頼された独立レビューは `background-critical-review` を使う。計画時に重要な選択が残る場合は `iterative-micro-interview` を併用する。 各手順は `skills/<skill-name>/SKILL.md` を参照する。
 
 ## Git操作の routing
 
