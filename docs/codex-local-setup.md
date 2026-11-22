@@ -8,12 +8,14 @@
 対象プロジェクトのディレクトリから起動する。恒久的な追加書込先は設けず、workspace-write/on-requestを基本とし、アプリ・管理ポリシーを優先する。
 
 ```bash
-codex                               # 通常：6-Luna medium
+codex                               # 通常：WSLのconfig.tomlで設定したモデル・effort
 codex --profile multi-file          # 複数ファイル：6-Luna high
 codex --profile review              # 計画・レビュー：6.1-Sol medium
 codex --profile orchestrate         # 進行管理・結果統合：6.1-Sol low
 codex --profile hard-implementation # 難しい実装：6.1-Sol low
 ```
+
+6.2-Sol を確認できた環境では正本の6.2系指定を使う。上記のWSLプロファイルの設定は、WSL側のモデル一覧で6.2系を確認してから更新する。
 
 設定ファイルはWSLの `$CODEX_HOME`（未指定なら `~/.codex`）内。通常はconfig.toml、用途別は `<profile>.config.toml`。Windowsのアプリ管理設定は保持する。モデル・effortの自動切替やサブエージェント自動起動は行わない。
 このデスクトップアプリの子プロセスはWindows側の `CODEX_HOME` を継承する場合がある。WSL専用設定を使うときは `env -u CODEX_HOME codex`、プロファイルは `env -u CODEX_HOME codex --profile review` のように起動する。補助表示もWSLのログを対象とする場合は `env -u CODEX_HOME ~/.codex/bin/codex-status --thread <会話UUID>` とする。環境変数が意図した設定先を指している通常のWSL端末では不要。
