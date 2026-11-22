@@ -1,0 +1,7 @@
+# 作品ごとに複製する空の色見本台帳（最初の提案時から書き込む）
+schema_version: 1
+project_id: ""
+title: ""
+updated_at: ""
+ratio_unit: "parts"           # 絵具を出す量の概算比率
+colors: []
