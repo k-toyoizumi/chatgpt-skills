@@ -1,0 +1,26 @@
+# 手順の説明用サンプル。実際の作品の正本ではない。
+schema_version: 1
+project_id: "example-hawaii"
+title: "架空の作品"
+updated_at: "2026-11-22"
+ratio_unit: "parts"
+colors:
+  - color_id: "FLOWER-STAMEN-01"
+    name: "花芯の黄色"
+    aliases: ["ハイビスカスのおしべ"]
+    area: "左下の花"
+    status: "proposed"
+    active_revision: 1
+    first_presented_at: "2026-11-22"
+    first_source: "example-only"
+    revisions:
+      - revision: 1
+        preview_hex: "#F3D34A"
+        recipe:
+          ratio_unit: "parts"
+          ingredients:
+            - {pigment: "ホルベイン パーマネントイエローライト", amount: 2}
+            - {pigment: "ホルベイン レモンイエロー", amount: 1}
+        added_medium: "不明（チューブそのまま）"
+        revision_status: "active"
+        revision_note: "初回提示値"
