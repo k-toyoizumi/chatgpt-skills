@@ -139,6 +139,13 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 差分確認・変更の選別・検証・ステージング・コミットを自律実行します。基本的な確認・add・通常のcommitは事前承認済み、pushはユーザーの明示指示時だけ未送信分をまとめて行います。コミットごとのpush承認依頼はしません。小さな個人作業は現在のブランチ、共同作業や大きな変更は作業ブランチ＋PRを基本にします。
 
 
+### `painting-guide`
+
+初心者の油絵制作を、構想・完成目標画像の選択・工程計画・四角色見本と混色比を使った制作ガイド・写真レビューまで支援するSkill。描く楽しさと本人の表現を尊重し、最低限の重要特徴と簡略化可能な部分を分けて助言します。
+
+- [Skill本体](skills/painting-guide/SKILL.md)
+- [表示ルール](skills/painting-guide/references/step-format.md)
+
 ### `textbook-authoring`
 
 日本語HTML教科書をQuartoで制作・検証するSkill。静的SVG・Mermaid図解、比較表、数式、演習を扱い、図・表には自動採番と本文からの相互参照を付けます。研究者向けSelf-Attentionのサンプルを導入ページ＋3章の独立したHTMLに分割し、左の折りたたみ可能な章選択、右のページ内目次、スマホの章メニューと前後章移動に対応します。
