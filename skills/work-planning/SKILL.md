@@ -12,6 +12,6 @@ description: 開発・研究・調査・資料制作などの依頼を、依存�
    - 同じファイルの編集や共有環境の操作が衝突する場合は、担当範囲や作業環境を分けるか、順次実行にする。分割で減る待ち時間と、引き継ぎ・統合・モデル利用の負担を比較し、並列化する範囲を決める。
 3. 正本の `rules/model-and-cost.md` に従い、親と各担当について「担当するタスク群／成果物と完了条件／具体的モデル・effort／新規または再利用の理由」を示す。難易度・誤判断の影響・共有する資料を見て割り当てる。例えば同じ文献群の抽出と比較表の作成は、設定が適合する同一担当へ順次渡す。小作業なら親だけで足りる理由を一行で示す。
 4. 当日中に完了する短い計画も含め、計画は案件内に Markdown で保存し、会話で保存先を示す。既存の計画・State の置き場を優先し、複数日または引き継ぎを伴う場合は前提と再開地点も添える。
-5. 計画だけの依頼は提示して終了する。実行まで依頼されていれば work-execution に引き継ぐ。
+5. 計画の説明には explain-for-decisions を使う。計画だけの依頼は提示して終了する。実行まで依頼されていれば work-execution に引き継ぐ。
 
 参考：[OpenAI Cookbook の ExecPlans](https://developers.openai.com/cookbook/articles/codex_exec_plans)、[Superpowers の writing-plans](https://github.com/obra/superpowers/blob/main/skills/writing-plans/SKILL.md)

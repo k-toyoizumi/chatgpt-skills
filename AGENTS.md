@@ -32,7 +32,7 @@
 
 ## 計画・実行・レビュー
 
-計画は `work-planning`、合意済み計画の実行は `work-execution`、明示依頼された独立レビューは `background-critical-review` を使う。計画時に重要な選択が残る場合は `iterative-micro-interview` を併用する。 各手順は `skills/<skill-name>/SKILL.md` を参照する。
+計画は `work-planning`、合意済み計画の実行は `work-execution`、明示依頼された独立レビューは `background-critical-review` を使う。計画時に重要な選択が残る場合は `iterative-micro-interview` を併用する。 計画・実験結果の説明と判断支援は `explain-for-decisions` を使う。各手順は `skills/<skill-name>/SKILL.md` を参照する。
 
 ## Git操作の routing
 
