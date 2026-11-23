@@ -7,6 +7,7 @@ import sys
 
 START = '<!-- chatgpt-skills:begin -->'
 END = '<!-- chatgpt-skills:end -->'
+DESIGN_RESEARCH = 'skills/agent-design-research/SKILL.md'
 
 
 def source_digest(source):
@@ -26,10 +27,11 @@ def routing(source):
 
 - 正本ルート：`{source}`。正本内の `rules/...` と `skills/...` はこのルートから解決する。
 - セッション開始時に `{source}/rules/core.md` と `{source}/rules/interaction.md` を実際に読む。参照先が読めない場合は不足を報告する。
-- その他のRules・Skillsは作業に関連するものだけ読む。プロジェクト固有の目的・予算・承認条件も併用する。
+- エージェントの設計・挙動・運用を変えるときは、方針を決める前に `{source}/{DESIGN_RESEARCH}` を読む。
+- その他のRules・Skillsは作業に関連するものだけ読み、案件固有の制約も守る。
 - Git操作時は `{source}/rules/git-workflow.md` を読む。合意した作業の確認・add・通常のcommitは事前承認済み。pushはユーザーの明示指示時だけ実行し、コミットごとの承認依頼はしない。
 - 作業後は **実施事項・現状報告・次のアクション** を簡潔に回答する。次のアクションはAgent側・ユーザー側を区別し、不要なら「なし」と記す。
-- 正本変更後は、今回の変更に関係する案件側の規約・仕様との整合性も確認する。下記の同期値は読込案内の生成元であり、意味上の整合性や実際の会話での適用を検証済みとする証拠ではない。
+- 正本を変更したら `{source}/docs/consumer-consistency.md` に従い、関係する案件側の規約・仕様との整合性も確認する。
 
 正本内容SHA256: `{source_digest(source)}`
 {END}'''
@@ -69,7 +71,7 @@ def main():
                         help='探索する親ディレクトリ（複数指定可、既定は正本の親）')
     args = parser.parse_args()
     source = Path(__file__).resolve().parents[1]
-    for relative in ('rules/core.md', 'rules/interaction.md'):
+    for relative in ('rules/core.md', 'rules/interaction.md', DESIGN_RESEARCH):
         if not (source / relative).is_file():
             parser.error(f'共通参照先がありません: {relative}')
     block = routing(source)

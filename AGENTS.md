@@ -1,66 +1,14 @@
 # Repository instructions
 
-このリポジトリは、AI Agent 用の Rules と Skills の正本として扱う。
+このリポジトリはエージェント向け共通規約と Skill の正本。共通規約は `rules/`、再利用する手順は `skills/<skill-name>/SKILL.md` に置く。案件の現在値や一時ログは案件側で管理する。
 
-## 基本方針
+- エージェントの設計・挙動・運用を変える提案、修正、機能追加では、方針を決める前に `skills/agent-design-research/SKILL.md` を読む。
+- 共通規約・Skill・読込案内を変更したら、完了報告前に [利用先との整合性確認](docs/consumer-consistency.md) を実施する。
+- Git 操作は `rules/git-workflow.md` と `skills/git-workflow/SKILL.md` に従う。
 
-- 詳細な共通規則は `rules/` に置く。
-- 特定タスクの再利用可能な実行手順は `skills/<skill-name>/SKILL.md` に置く。
-- プロジェクト固有の現在状態・ID・URL・一時ログを、このリポジトリの共通 Rules / Skills に埋め込まない。
-- Rules / Skills は小さく保ち、同じ内容を複数ファイルへ重複させない。
-- 機械的に検証・処理できる内容は、LLM よりテスト・schema・通常コード・通常ツールを優先する。
-- モデル系列は `rules/model-and-cost.md` に従い、通常はLuna medium、複数ファイルはLuna high、計画・レビューはSol medium、オーケストレーション・難しい実装はSol mediumとする。世代・具体的なモデル識別子は実行時に確認する。
+## 関連する参照先
 
-## 編集時の参照
-
-- 構成・分類を変更する場合: `README.md` と `rules/core.md`
-- Context / State を変更する場合: `rules/context-and-state.md`
-- model / effort / cost を変更する場合: `rules/model-and-cost.md`
-- diff / validation の原則を変更する場合: `rules/change-and-validation.md`
-- Gitの権限・履歴・送信方針を変更する場合: `rules/git-workflow.md`
-- 差分更新 workflow を変更する場合: `skills/incremental-update/SKILL.md`
-- 論文・技術調査 workflow を変更する場合: `skills/research-survey/SKILL.md`
-- その他の Workflow を変更する場合: 対応する `skills/*/SKILL.md`
-
-ユーザーの最新指示、およびタスク固有の明示的な仕様を最優先する。
-
-## 共通設定更新時の利用先確認
-
-- Rules / Skills / 読込案内を更新したら、完了報告前に `docs/consumer-consistency.md` の手順で利用プロジェクトとの整合性を確認する。正本内だけの検証で終了しない。
-- `python3 scripts/sync_consumers.py --check` で対象と差分を確認し、必要なら `--apply` で管理区画を同期する。変更した規約に関係する利用先の指示・仕様も読み、意味上の衝突や読込漏れを必要な範囲で修正する。
-- 各案件の既存変更・承認条件を保持する。権限不足・参照不能・重要判断待ちは未解決として報告し、全件整合済みとしない。
-
-## 計画・実行・レビュー
-
-計画は `work-planning`、合意済み計画の実行は `work-execution`、明示依頼された独立レビューは `background-critical-review` を使う。計画時に重要な選択が残る場合は `iterative-micro-interview` を併用する。 計画・実験結果の説明と判断支援は `explain-for-decisions` を使う。各手順は `skills/<skill-name>/SKILL.md` を参照する。
-
-## Git操作の routing
-
-- 作業成果のステージング・コミット・プッシュでは `rules/git-workflow.md` と `skills/git-workflow/SKILL.md` を参照する。合意した作業の確認・add・通常のcommitは事前承認済みとして検証後に自律実行する。pushはユーザーの明示指示時だけ行い、コミットごとの承認依頼はしない。
-
-## 長時間計算の routing
-
-- 長時間の学習・評価・バッチ計算の少数件での動作確認、WSLでのバックグラウンド起動と引き継ぎは `skills/long-running-compute/SKILL.md` を参照する。
-
-## GUI開発の routing
-
-- アプリ・GUIの新規開発や改善では `skills/develop-gui/SKILL.md` を参照する。小修正では質問・画面2案比較を省略し、重要な曖昧さだけ選択式で確認する。
-
-## 研究開発の routing
-
-- 研究の探索・方向選択・検証の優先順位は `rules/research.md` に従う。方向が未定なら問い・問題設定・発散的な着想を優先し、合意後に厳密な検証・蓄積へ移る。
-- 研究方向・サーベイ設計・アイデア・実験・研究コードの具体化は `skills/research-dialogue/SKILL.md` を参照する。通常3〜5問ずつ検討を重ね、段階移行はユーザーが選ぶ。単純な質問・明確な小修正には適用しない。
-- 文献調査の実行は `research-survey`、研究GUIの画面・動作検証は `develop-gui` と併用し、同じ質問を重複させない。
-
-## 数学研究・形式証明・論文化の routing
-
-- 数学的な新規発見、証明の監査、Leanによる検証、研究ノートの蓄積、論文候補への昇格では `rules/mathematical-research.md` と `skills/mathematical-research-to-paper/SKILL.md` を参照する。
-- 研究方向の対話は既存の `research-dialogue`、文献調査は `research-survey` を併用し、重複した質問をしない。
-
-## HTML教科書の routing
-
-- 日本語HTML教材・オンライン教科書の新規制作・改訂では `skills/textbook-authoring/SKILL.md` を参照する。Quarto Bookを正本とし、1章1HTML、左の階層サイドバー（折りたたみ）、右のページ内目次、スマホの章メニュー、前後章ナビゲーションを標準とする。図表は自動採番し、章をまたぐ参照も維持する。共通対話Skillとの質問重複を避ける。
-
-## 油絵制作の routing
-
-- 油絵の構想・完成目標画像の選択・制作計画・色見本つき実制作・進捗写真の評価は `skills/painting-guide/SKILL.md` を参照する。本人の描き方と楽しさを尊重し、最低限の再現点・難所の簡略化・乾燥を考慮した助言をする。共通の反復マイクロインタビューと質問を重複させない。
+- 共通方針と適用範囲は `rules/core.md`。状態管理、モデルと費用、変更と検証はそれぞれ `rules/context-and-state.md`、`rules/model-and-cost.md`、`rules/change-and-validation.md`。
+- 計画・実行・レビュー・対話・判断支援は `rules/interaction.md`。
+- 研究の判断は `rules/research.md`、研究対話と文献調査は `research-dialogue` と `research-survey`。数学研究は `rules/mathematical-research.md` と `mathematical-research-to-paper`。
+- 差分更新、長時間計算、GUI、HTML 教材、油絵は、それぞれ `incremental-update`、`long-running-compute`、`develop-gui`、`textbook-authoring`、`painting-guide`。Skill 名はこの正本の `skills/<skill-name>/SKILL.md` を指す。

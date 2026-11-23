@@ -110,6 +110,10 @@ Source of Truth、Project State、ChatGPT Memory、Working Set、Scratch の役�
 
 既存の Web アプリ、レポート、設定、データなどを更新するときに、差分抽出 → 影響範囲選択 → 変更 → 検証 → 公開を行う Skill です。
 
+### `agent-design-research`
+
+エージェントの設計・挙動・運用を変える際に、開発元の公式推奨と公開実例を確認し、利用環境に照らして現行方式と変更案を比較する [Skill](skills/agent-design-research/SKILL.md) です。
+
 ### `research-survey`
 
 論文・技術調査を以下の3段階で行います。
