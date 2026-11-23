@@ -11,8 +11,8 @@
 codex                               # 通常：WSLのconfig.tomlで設定したモデル・effort
 codex --profile multi-file          # 複数ファイル：6-Luna high
 codex --profile review              # 計画・レビュー：6.2-Sol medium
-codex --profile orchestrate         # 進行管理・結果統合：6.2-Sol low
-codex --profile hard-implementation # 難しい実装：6.2-Sol low
+codex --profile orchestrate         # 進行管理・結果統合：6.2-Sol medium
+codex --profile hard-implementation # 難しい実装：6.2-Sol medium
 ```
 
 WSL のモデル一覧で gpt-6.2-sol を確認し、上記3つの用途別プロファイルに設定済み。
