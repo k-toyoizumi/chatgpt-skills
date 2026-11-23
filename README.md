@@ -8,8 +8,8 @@ ChatGPT・Codex などの AI Agent で再利用する、個人用の **Rules（�
 
 計画は `work-planning`、合意済み計画の実行は `work-execution`、明示依頼された独立レビューは `background-critical-review` を使う。計画時に重要な選択が残る場合は `iterative-micro-interview` を併用する。
 
-- [work-planning](skills/work-planning/SKILL.md)
-- [work-execution](skills/work-execution/SKILL.md)
+- [work-planning](skills/work-planning/SKILL.md) は各工程の依存関係、並列に着手できる組み合わせ、担当と合流時の検証を計画に記します。
+- [work-execution](skills/work-execution/SKILL.md) は前提がそろった工程から着手し、担当の成果を回収・統合します。
 - [background-critical-review](skills/background-critical-review/SKILL.md)
 - [iterative-micro-interview](skills/iterative-micro-interview/SKILL.md)
 
